@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:02:15
 # @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-10 20:41:50
+# @Last Modified time: 2015-10-10 21:07:00
 
 import os
 import logging
@@ -17,6 +17,10 @@ root = 'E:\\tutorial\\python\\cogujie\\'
 
 path = {
     'db': os.path.join(root, 'mogujie.db'),
+}
+
+limit = {
+    'section': 50,
 }
 
 url = {
@@ -35,5 +39,6 @@ sleep = {
 }
 
 regex = {
-    'moguprofile': re.compile(r'MOGUPROFILE = ({[\w\W]+?})')
+    'profile': re.compile(r'MOGUPROFILE = (?P<profile>{[\w\W]+?})'),
+    'firstdata': re.compile(r'MoGu.APP.firstData = ((?P<firstdata>\[[\w\W]+?\]);)'),
 }
