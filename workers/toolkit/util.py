@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:15:17
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-10 23:31:31
+# @Last Modified time: 2015-10-11 00:17:59
 import sys
 sys.path.append('../..')
 
@@ -36,7 +36,7 @@ class Util(object):
     @classmethod
     def http_get(cls, url, headers = config.header):
         try:
-            response = requests.get(url, headers = headers)
+            response = requests.get(url)#, headers = headers)
             return response.content
         except Exception, e:
             logging.exception('get url: %s'%url)

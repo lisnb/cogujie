@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-10 20:38:12
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-11 00:07:40
+# @Last Modified time: 2015-10-11 00:22:30
 
 import sys
 sys.path.append('..')
@@ -25,7 +25,7 @@ class Book(object):
         self.category = category
         self.bookid = bookid
         self.title = title
-        self.currentpage = 1
+        self.currentpage = 2
         # self.page = 0
         self.currentsection = 2
         self.section = 1
@@ -47,8 +47,13 @@ class Book(object):
 
     def __getfirstsection(self):
         logging.debug('get portal... ')
-        url = config.url['portalbook']%(self.category, self.currentpage)
+        url = config.url['portalbook']%(self.category, self.bookid)
+        print url
         html = Util.http_get(url)
+        # print html
+        with open('../sample/portal.html', 'wb') as f:
+            f.write(html)
+        # exit(6)
         if not html:
             logging.error('no portal html, category: {}, bookid: {}, page: {}'.format(self.category, self.bookid, self.currentpage))
             exit(2)
@@ -71,7 +76,7 @@ class Book(object):
             logging.error('no firstdata, category: {}, bookid: {}, page: {}'.format(self.category, self.bookid, self.currentpage))
             exit(5)
         else:
-            print firstdata.groupdict()['firstdata']
+            # print firstdata.groupdict()['firstdata']
             firstdata = json.loads(firstdata.groupdict()['firstdata'])
 
         for item in firstdata:
@@ -91,6 +96,8 @@ class Book(object):
 
         self.payload['section'] = self.currentsection
         response = Util.http_post(config.url['ajaxbook'], self.payload)
+        self.currentsection+=1
+        self.section+=1
         if not response:
             logging.warning('getnextsection response null, payload: %s'%self.payload)
             return False
@@ -162,8 +169,8 @@ def testmti():
         # time.sleep(1)
 
 if __name__ == '__main__':
-    book = Book('neiyi', 50030)
+    book = Book('clothing', 50278)
     for item in book:
-        print item['tradeItemId'], item['title']
+        print item['tradeItemId'], item['title'].encode('utf-8')
 
 
