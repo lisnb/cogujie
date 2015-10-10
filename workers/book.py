@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: LiSnB
 # @Date:   2015-10-10 20:38:12
-# @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-10 21:26:42
+# @Last Modified by:   lisnb
+# @Last Modified time: 2015-10-10 23:15:42
 
 import sys
 sys.path.append('..')
@@ -18,7 +18,7 @@ import time
 
 class Book(object):
     """docstring for Book"""
-    def __init__(self, category, bookid, title = u'未知品类', batchlimit = config.limit['section']):
+    def __init__(self, category, bookid, title = u'未知品类', sectionlimit = config.limit['section']):
         super(Book, self).__init__()
         self.category = category
         self.bookid = bookid
@@ -30,11 +30,13 @@ class Book(object):
         self.itemqlock = threading.Lock()
         self.items = Queue()
         self.book = ''
+        self.over = False
+        self.batchlimit = batchlimit
 
     def __iter__(self):
         return self
 
-    def __getfirstbatch(self):
+    def __getfirstsection(self):
         logging.debug('get portal... ')
         url = config.path['book']%(self.category, self.page)
         html = Util.http_get(url)
@@ -59,14 +61,21 @@ class Book(object):
             firstdata = json.loads(firstdata.groupdict()['firstdata'])
         for item in firstdata:
             self.items.put(item)
-    def __getnextbatch(self):
-        pass
+
+    def __getnextsection(self):
+        if self.section >= self.batchlimit
 
 
     def next(self):
         with self.itemqlock:
+            if self.over:
+                raise StopIteration
             if self.items.qsize() == 0:
-                self.__getnextbatch()
+                r = self.__getnextsection()
+                if not r:
+                    logging.info('book done, category: {}, bookid: {}'.format(self.category, self.bookid))
+                    self.over = True
+                    raise StopIteration
             item = self.items.get()
         return item
 
