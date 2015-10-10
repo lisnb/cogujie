@@ -3,10 +3,11 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:02:15
 # @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-09 20:12:54
+# @Last Modified time: 2015-10-10 20:41:50
 
 import os
 import logging
+import re
 
 loglevel = logging.DEBUG
 
@@ -20,6 +21,7 @@ path = {
 
 url = {
     'detail': 'http://shop.mogujie.com/detailinfo/%s?_ajax=1',
+    'book': 'http://www.mogujie.com/book/%s/%s',
 }
 
 header = {
@@ -30,4 +32,8 @@ sleep = {
     'short': [1, 5],
     'long': [5, 10],
     'long long': [10, 15],
+}
+
+regex = {
+    'moguprofile': re.compile(r'MOGUPROFILE = ({[\w\W]+?})')
 }
