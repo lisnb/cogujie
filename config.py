@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: LiSnB
 # @Date:   2015-10-09 19:02:15
-# @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-10 21:07:00
+# @Last Modified by:   lisnb
+# @Last Modified time: 2015-10-11 00:03:43
 
 import os
 import logging
@@ -20,12 +20,14 @@ path = {
 }
 
 limit = {
-    'section': 50,
+    'section': 20,
+    'singlepage': 10
 }
 
 url = {
     'detail': 'http://shop.mogujie.com/detailinfo/%s?_ajax=1',
-    'book': 'http://www.mogujie.com/book/%s/%s',
+    'portalbook': 'http://www.mogujie.com/book/%s/%s',
+    'ajaxbook': 'http://www.mogujie.com/book/ajax',
 }
 
 header = {
@@ -39,6 +41,6 @@ sleep = {
 }
 
 regex = {
-    'profile': re.compile(r'MOGUPROFILE = (?P<profile>{[\w\W]+?})'),
+    'profile': re.compile(r'MOGUPROFILE = [\w\W]+?book:"(?P<book>[^"]+?)"'),
     'firstdata': re.compile(r'MoGu.APP.firstData = ((?P<firstdata>\[[\w\W]+?\]);)'),
 }
