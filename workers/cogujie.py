@@ -3,11 +3,11 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:05:39
 # @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-09 20:32:04
+# @Last Modified time: 2015-10-10 14:26:21
 
 import sys
 sys.path.append('..')
-import config
+import ..config
 import requests
 import json
 import os
@@ -45,9 +45,10 @@ class Cogujie(object):
             logging.exception('get url: %s'%url)
             return None
 
-    def __init__(self, itemid):
+    def __init__(self, itemid, title=u'未知商品'):
         super(Cogujie, self).__init__()
         self.itemid = itemid
+        self.title = title
 
     def run(self):
         self.getdetail()
@@ -66,7 +67,7 @@ class Cogujie(object):
             imgdest = os.path.join(self.db_img, img['name'])
             Cogujie._downloadimg(img['url'], imgdest, img['name'])
     def __str__(self):
-        content = '%s\n%s'%(self.itemid, '\n'.join(self.parameter))
+        content = '%s\n%s\n%s'%(self.itemid, self.title, '\n'.join(self.parameter))
         return content.encode('utf-8')
 
     def writetofile(self):

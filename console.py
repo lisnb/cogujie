@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 20:15:10
 # @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-09 20:18:17
+# @Last Modified time: 2015-10-10 14:24:38
 
 from workers import cogujie
 import sys
@@ -12,7 +12,7 @@ import sys
 
 def run(itemid):
     instance = cogujie.Cogujie(itemid)
-    instance.run()
+    # instance.run()
 
 
 if __name__ == '__main__':
