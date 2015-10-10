@@ -3,74 +3,51 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:05:39
 # @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-10 14:26:21
+# @Last Modified time: 2015-10-10 15:46:13
 
 import sys
 sys.path.append('..')
-import ..config
+import config
 import requests
 import json
 import os
 import logging
 import random
 import time
+from toolkit.util import Util
 
-class Cogujie(object):
-    """docstring for Cogujie"""
-
-    @staticmethod
-    def _sleep(interval):
-        sec = config.sleep[interval]
-        sec = random.randint(sec[0], sec[1])
-        time.sleep(sec)
-
-    @staticmethod
-    def _downloadimg(src, dest, name):
-        logging.debug('img - downloading: %s'%src)
-        Cogujie._sleep('short')
-        try:
-            r = requests.get(src)
-            with open(dest, 'wb') as f:
-                for chunk in r.iter_content(chunk_size = 1024):
-                    f.write(chunk)
-        except Exception, e:
-            logging.exception('img - downloading exception: %s'%name)
-
-    @staticmethod
-    def _get(url):
-        try:
-            response = requests.get(url, headers = config.header)
-            return response.content
-        except Exception, e:
-            logging.exception('get url: %s'%url)
-            return None
+class TradeItem(object):
+    """docstring for TradeItem"""
 
     def __init__(self, itemid, title=u'未知商品'):
-        super(Cogujie, self).__init__()
+        super(TradeItem, self).__init__()
         self.itemid = itemid
         self.title = title
 
-    def run(self):
-        self.getdetail()
-
-
-    def prepare(self):
-        self.db = os.path.join(config.path['db'], self.itemid)
-        if not os.path.isdir(self.db):
-            os.makedirs(self.db)
-        self.db_img = os.path.join(self.db, 'imgs')
-        if not os.path.isdir(self.db_img):
-            os.mkdir(self.db_img)
-
-    def getimgs(self):
-        for img in self.imgs:
-            imgdest = os.path.join(self.db_img, img['name'])
-            Cogujie._downloadimg(img['url'], imgdest, img['name'])
     def __str__(self):
         content = '%s\n%s\n%s'%(self.itemid, self.title, '\n'.join(self.parameter))
         return content.encode('utf-8')
 
-    def writetofile(self):
+    def run(self):
+        self.__prepare()
+        self.__getdetail()
+        self.__getimgs()
+        self.__writetofile()
+
+    def __prepare(self):
+        self.db = os.path.join(config.path['db'], self.itemid)
+        # if not os.path.isdir(self.db):
+            # os.makedirs(self.db)
+        self.db_img = os.path.join(self.db, 'imgs')
+        if not os.path.isdir(self.db_img):
+            os.makedirs(self.db_img)
+
+    def __getimgs(self):
+        for img in self.imgs:
+            imgdest = os.path.join(self.db_img, img['name'])
+            Util.downloadimg(img['url'], imgdest, img['name'])
+
+    def __writetofile(self):
         dest = os.path.join(self.db, 'info')
         try:
             with open(dest, 'wb') as f:
@@ -78,10 +55,9 @@ class Cogujie(object):
         except Exception, e:
             logging.exception('%s writetofile exception'%self.itemid)
 
-    def getdetail(self):
-        self.prepare()
+    def __getdetail(self):
         url = config.url['detail']%self.itemid
-        detail = Cogujie._get(url)
+        detail = Util.http_get(url)
         try:
             detail = json.loads(detail)
             # logging.debug(detail)
@@ -126,14 +102,12 @@ class Cogujie(object):
                     self.imgs.append(curimg)
                     imgid_ai+=1
 
-        self.getimgs()
-        self.writetofile()
 
 if __name__ == '__main__':
     # Cogujie._downloadimg('sdaf')
     # logging.basicConfig(level = config.loglevel, format='%(asctime)s - %(levelname)s - %(threadName)-10s - %(message)s')
     logging.getLogger("requests").setLevel(logging.ERROR)
-    cogujie  = Cogujie('18033m4')
+    cogujie  = TradeItem('18033m4')
     cogujie.run()
 
 
