@@ -3,7 +3,7 @@
 # @Author: lisnb
 # @Date:   2015-10-10 22:52:43
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-10 23:11:39
+# @Last Modified time: 2015-10-11 14:48:57
 
 """
 import sys
@@ -21,6 +21,7 @@ class MTCheckDup(object):
         super(MTCheckDup, self).__init__()
         self.__slock = threading.Lock()
         self.__items = set()
+        self.func = func
         # if not func:
         #     def returnself(item):
         #         return item

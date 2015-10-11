@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: LiSnB
 # @Date:   2015-10-09 19:05:39
-# @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-10 15:46:13
+# @Last Modified by:   lisnb
+# @Last Modified time: 2015-10-11 14:53:04
 
 import sys
 sys.path.append('..')
@@ -19,10 +19,10 @@ from toolkit.util import Util
 class TradeItem(object):
     """docstring for TradeItem"""
 
-    def __init__(self, itemid, title=u'未知商品'):
+    def __init__(self, itemid, title):
         super(TradeItem, self).__init__()
         self.itemid = itemid
-        self.title = title
+        self.title = title if title else u'未知商品'
 
     def __str__(self):
         content = '%s\n%s\n%s'%(self.itemid, self.title, '\n'.join(self.parameter))

@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:02:15
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-11 00:03:43
+# @Last Modified time: 2015-10-11 14:55:35
 
 import os
 import logging
@@ -19,9 +19,14 @@ path = {
     'db': os.path.join(root, 'mogujie.db'),
 }
 
+switch = {
+    'mogucheckdup': True,
+}
+
 limit = {
     'section': 20,
-    'singlepage': 10
+    'singlepage': 10,
+    'mogudup': 10,
 }
 
 url = {
