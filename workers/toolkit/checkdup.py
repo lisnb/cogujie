@@ -3,7 +3,7 @@
 # @Author: lisnb
 # @Date:   2015-10-10 22:52:43
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-11 14:48:57
+# @Last Modified time: 2015-10-12 20:12:15
 
 """
 import sys
@@ -71,5 +71,6 @@ if __name__ == '__main__':
     print mt.checkdup('bac')
     # print mt.__items
     print dir(mt)
+    
 
 

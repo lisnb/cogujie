@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:15:17
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-11 00:17:59
+# @Last Modified time: 2015-10-12 20:14:18
 import sys
 sys.path.append('../..')
 
@@ -57,3 +57,6 @@ class Util(object):
         sec = config.sleep[interval]
         sec = random.randint(sec[0], sec[1])
         time.sleep(sec)
+
+if __name__ == '__main__':
+    print config.root

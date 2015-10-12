@@ -3,17 +3,21 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:02:15
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-11 14:55:35
+# @Last Modified time: 2015-10-12 20:14:28
 
 import os
 import logging
 import re
+import platform
+
+system = platform.system().lower()
 
 loglevel = logging.DEBUG
 
 logging.basicConfig(level = loglevel, format='%(asctime)s - %(levelname)s - %(threadName)-10s - %(message)s')
 
-root = 'E:\\tutorial\\python\\cogujie\\'
+# root = os.getcwd()
+root = os.path.split(os.path.realpath(__file__))[0]
 
 path = {
     'db': os.path.join(root, 'mogujie.db'),
@@ -25,7 +29,7 @@ switch = {
 
 limit = {
     'section': 20,
-    'singlepage': 10,
+    'singlepage': 9,
     'mogudup': 10,
 }
 

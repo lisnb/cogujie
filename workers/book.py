@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-10 20:38:12
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-11 00:22:30
+# @Last Modified time: 2015-10-12 20:06:33
 
 import sys
 sys.path.append('..')
@@ -82,13 +82,15 @@ class Book(object):
         for item in firstdata:
             self.items.put(item)
 
+        self.currentsection = 2
+
 
 
     def __getnextsection(self):
         if self.section >= self.sectionlimit:
             return False
-        if self.currentpage == self.singlepagelimit:
-            self.currentpage+=1
+        if self.currentsection == self.singlepagelimit:
+            self.currentpage += 1
             self.section+=1
             self.currentsection = 2
             self.__getfirstsection()
