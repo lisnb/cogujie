@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:02:15
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-12 20:14:28
+# @Last Modified time: 2015-10-12 20:23:26
 
 import os
 import logging
@@ -21,6 +21,10 @@ root = os.path.split(os.path.realpath(__file__))[0]
 
 path = {
     'db': os.path.join(root, 'mogujie.db'),
+}
+
+count = {
+    'mogu': 5,
 }
 
 switch = {
