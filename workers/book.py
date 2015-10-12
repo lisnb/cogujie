@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-10 20:38:12
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-12 20:06:33
+# @Last Modified time: 2015-10-12 23:27:37
 
 import sys
 sys.path.append('..')
@@ -165,14 +165,16 @@ def testmti():
     for i in range(5):
         t = MTIWorker(mtiter)
         # t.setDaemon(True)
-        t.start()
+        # t.start()
+        t.run()
 
     # while 1:
         # time.sleep(1)
 
 if __name__ == '__main__':
-    book = Book('clothing', 50278)
-    for item in book:
-        print item['tradeItemId'], item['title'].encode('utf-8')
+    # book = Book('clothing', 50278)
+    # for item in book:
+        # print item['tradeItemId'], item['title'].encode('utf-8')
+    testmti()
 
 

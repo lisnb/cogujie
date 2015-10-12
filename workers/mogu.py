@@ -3,16 +3,17 @@
 # @Author: lisnb
 # @Date:   2015-10-11 14:39:48
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-11 14:58:20
+# @Last Modified time: 2015-10-12 23:36:36
 
 import sys
 sys.path.append('..')
 import config
 
-from book import book
+from book import Book
 from tradeitem import TradeItem
 from toolkit.util import Util 
 import threading
+import logging
 
 
 class Mogu(threading.Thread):
@@ -21,7 +22,7 @@ class Mogu(threading.Thread):
         super(Mogu, self).__init__()
         self.book = book
         self.checkdup = checkdup
-        self.checkdup.setfunc(self.__getkey)
+        # self.checkdup.setfunc(self.__getkey)
         self.dupcnt = 0
 
     def __getkey(self, item):
@@ -45,9 +46,9 @@ class Mogu(threading.Thread):
 
 
 def testdef():
-    a = def t():
+    def t():
         return 0
-    print a()
+    print t
 
 if __name__ == '__main__':
     testdef()

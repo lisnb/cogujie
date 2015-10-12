@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 19:02:15
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-12 20:23:26
+# @Last Modified time: 2015-10-13 00:04:57
 
 import os
 import logging
@@ -29,6 +29,7 @@ count = {
 
 switch = {
     'mogucheckdup': True,
+    'mt': True
 }
 
 limit = {
