@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: LiSnB
 # @Date:   2015-10-09 20:15:10
-# @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-13 16:30:36
+# @Last Modified by:   lisnb
+# @Last Modified time: 2015-10-13 17:00:08
 
 from workers.cogujie import Cogujie
 from workers.tradeitem import TradeItem
@@ -22,6 +22,13 @@ def clearfix():
 
 def usage():
     usage = """
+
+    # @Author: LiSnB
+    # @Date:   2015-10-09 20:15:10
+    # @Last Modified by:   lisnb
+    # @Last Modified time: 2015-10-13 16:48:43
+    # @E-mail: lisnb.h@hotmail.com
+
     NAME
             cogujie - Mogujie images crawler
     SYNOPSIS
@@ -35,6 +42,18 @@ def usage():
             You can crawl a single trade item or all the trade items under a category.
             All the images will be stored in mogujie.db, structure is orgnized as below:
 
+            mogujie.db
+            ├── skirt_50099
+            │   └── 180ohb6
+            │       ├── imgs
+            │       │   ├── 180ohb6_model_img_0.jpg
+            │       │   ├── 180ohb6_model_img_1.jpg
+            │       │   ├── 180ohb6_model_img_2.jpg
+            │       │   ├── 180ohb6_model_img_3.jpg
+            │       │   └── 180ohb6_model_img_4.jpg
+            │       └── info
+            └── t.placeholder
+            
             The content of info file is as below ('ln' means nth line):
             l1: the title of the category to which this item belongs
             l2: the tradeitemid of current item
@@ -146,6 +165,10 @@ def run():
             cogujie = Cogujie(categories)
             cogujie.run()
 
+    elif '-c' not in optd and '-i' not in optd:
+        print 'you are supposed to provided one of  -i -c at'
+        print 'use --help or -h to check the usage'
+        exit(1)
 
     else:
         print 'you are not supposed to provided -i -c at the same time'
