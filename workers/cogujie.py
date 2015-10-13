@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: lisnb
 # @Date:   2015-10-12 22:56:47
-# @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-13 00:04:20
+# @Last Modified by:   LiSnB
+# @Last Modified time: 2015-10-13 16:39:30
 
 import sys
 sys.path.append('..')
@@ -39,11 +39,9 @@ class Cogujie(object):
 
     # @classmethod
     def processcategory(self, category):
-        print category
-        logging.debug('process category: %(category)s, %(title)s, %(id)s'%category)
+        logging.info('process category: %(category)s, %(title)s, %(id)s'%category)
         book = Book(category['category'], bookid = category['id'], title = category['title'])
         mtcheckdup = MTCheckDup()
-        
         if config.switch['mt']:
             for i in range(config.count['mogu']):
                 t = Mogu(book, mtcheckdup)
@@ -62,7 +60,3 @@ if __name__ == '__main__':
 
     cogujie = Cogujie(categories)
     cogujie.run()
-
-
-
-        

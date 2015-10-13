@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: lisnb
 # @Date:   2015-10-11 14:39:48
-# @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-12 23:36:36
+# @Last Modified by:   LiSnB
+# @Last Modified time: 2015-10-13 14:16:14
 
 import sys
 sys.path.append('..')
@@ -11,7 +11,7 @@ import config
 
 from book import Book
 from tradeitem import TradeItem
-from toolkit.util import Util 
+from toolkit.util import Util
 import threading
 import logging
 
@@ -24,6 +24,7 @@ class Mogu(threading.Thread):
         self.checkdup = checkdup
         # self.checkdup.setfunc(self.__getkey)
         self.dupcnt = 0
+        self.category = '%s_%s'%(self.book.category, self.book.bookid)
 
     def __getkey(self, item):
         return item.get('tradeItemId', '')
@@ -39,7 +40,7 @@ class Mogu(threading.Thread):
                     else:
                         logging.warning('item dup badly, check your strategy and config')
                     continue
-                titem = TradeItem(item['tradeItemId'], item.get('title', None))
+                titem = TradeItem(item['tradeItemId'], item.get('title', None), self.book.title, self.category)
                 titem.run()
             except Exception, e:
                 logging.exception('mogu exception, item: %s'%item)

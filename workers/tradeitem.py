@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: LiSnB
 # @Date:   2015-10-09 19:05:39
-# @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-11 14:53:04
+# @Last Modified by:   LiSnB
+# @Last Modified time: 2015-10-13 16:31:46
 
 import sys
 sys.path.append('..')
@@ -19,23 +19,30 @@ from toolkit.util import Util
 class TradeItem(object):
     """docstring for TradeItem"""
 
-    def __init__(self, itemid, title):
+    def __init__(self, itemid, title = None, categorytitle = None, category = None, singleitemlimit = config.limit['singleitem']):
         super(TradeItem, self).__init__()
         self.itemid = itemid
         self.title = title if title else u'未知商品'
+        self.category = category if category else 'not_specified'
+        self.categorytitle = categorytitle if categorytitle else u'未知品类'
+        self.singleitemlimit = singleitemlimit
+        # self.title  = title
+        # self.category = category
+        # self.categorytitle = categorytitle
 
     def __str__(self):
-        content = '%s\n%s\n%s'%(self.itemid, self.title, '\n'.join(self.parameter))
+        content = '%s\n%s\n%s\n%s'%(self.categorytitle, self.itemid, self.title, '\n'.join(self.parameter))
         return content.encode('utf-8')
 
     def run(self):
+        logging.info('start tradeitem, itemid: %s, title: %s'%(self.itemid, self.title))
         self.__prepare()
         self.__getdetail()
         self.__getimgs()
         self.__writetofile()
 
     def __prepare(self):
-        self.db = os.path.join(config.path['db'], self.itemid)
+        self.db = os.path.join(config.path['db'], self.category, self.itemid)
         # if not os.path.isdir(self.db):
             # os.makedirs(self.db)
         self.db_img = os.path.join(self.db, 'imgs')
@@ -43,9 +50,13 @@ class TradeItem(object):
             os.makedirs(self.db_img)
 
     def __getimgs(self):
+        cnt = 0
         for img in self.imgs:
             imgdest = os.path.join(self.db_img, img['name'])
             Util.downloadimg(img['url'], imgdest, img['name'])
+            cnt+=1
+            if cnt >= self.singleitemlimit:
+                break
 
     def __writetofile(self):
         dest = os.path.join(self.db, 'info')

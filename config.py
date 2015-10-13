@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: LiSnB
 # @Date:   2015-10-09 19:02:15
-# @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-13 00:04:57
+# @Last Modified by:   LiSnB
+# @Last Modified time: 2015-10-13 16:30:08
 
 import os
 import logging
@@ -12,12 +12,12 @@ import platform
 
 system = platform.system().lower()
 
-loglevel = logging.DEBUG
-
-logging.basicConfig(level = loglevel, format='%(asctime)s - %(levelname)s - %(threadName)-10s - %(message)s')
-
 # root = os.getcwd()
 root = os.path.split(os.path.realpath(__file__))[0]
+
+level = {
+    'log': logging.INFO,
+}
 
 path = {
     'db': os.path.join(root, 'mogujie.db'),
@@ -29,13 +29,14 @@ count = {
 
 switch = {
     'mogucheckdup': True,
-    'mt': True
+    'mt': False
 }
 
 limit = {
     'section': 20,
     'singlepage': 9,
     'mogudup': 10,
+    'singleitem': 5,
 }
 
 url = {
@@ -58,3 +59,6 @@ regex = {
     'profile': re.compile(r'MOGUPROFILE = [\w\W]+?book:"(?P<book>[^"]+?)"'),
     'firstdata': re.compile(r'MoGu.APP.firstData = ((?P<firstdata>\[[\w\W]+?\]);)'),
 }
+
+
+logging.basicConfig(level = level['log'], format='%(asctime)s - %(levelname)s - %(threadName)-10s - %(message)s')

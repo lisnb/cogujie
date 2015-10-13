@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: LiSnB
 # @Date:   2015-10-10 20:38:12
-# @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-12 23:27:37
+# @Last Modified by:   LiSnB
+# @Last Modified time: 2015-10-13 16:34:05
 
 import sys
 sys.path.append('..')
@@ -20,11 +20,11 @@ import base64
 
 class Book(object):
     """docstring for Book"""
-    def __init__(self, category, bookid, title = u'未知品类', sectionlimit = config.limit['section'], singlepagelimit = config.limit['singlepage']):
+    def __init__(self, category, bookid, title = None , sectionlimit = config.limit['section'], singlepagelimit = config.limit['singlepage']):
         super(Book, self).__init__()
         self.category = category
         self.bookid = bookid
-        self.title = title
+        self.title = title if title else u'未知品类'
         self.currentpage = 2
         # self.page = 0
         self.currentsection = 2
@@ -46,47 +46,37 @@ class Book(object):
         return self
 
     def __getfirstsection(self):
-        logging.debug('get portal... ')
+        logging.info('get portal page, title: %s category: %s, category id: %s, currentpage: %s'%(self. title ,self.category, self.bookid, self.currentpage))
         url = config.url['portalbook']%(self.category, self.bookid)
-        print url
         html = Util.http_get(url)
-        # print html
-        with open('../sample/portal.html', 'wb') as f:
-            f.write(html)
-        # exit(6)
         if not html:
             logging.error('no portal html, category: {}, bookid: {}, page: {}'.format(self.category, self.bookid, self.currentpage))
             exit(2)
         profile = config.regex['profile'].search(html)
         if not profile or 'book' not in profile.groupdict():
             logging.error('no book, category: {}, bookid: {}, page: {}'.format(self.category, self.bookid, self.currentpage))
-            exit(3)
+            exit(2)
         else:
-            # print profile.groupdict()['book']
             self.book = profile.groupdict()['book']
-            #profile = json.loads(profile.groupdict()['profile'])
-        # self.book = profile.get('book', '')
-        # exit(5)
         self.payload['book'] = self.book
         if not self.book:
             logging.error('no valid book, category: {}, bookid: {}, page: {}'.format(self.category, self.bookid, self.currentpage))
-            exit(4)
+            exit(2)
         firstdata = config.regex['firstdata'].search(html)
         if not firstdata or 'firstdata' not in firstdata.groupdict():
             logging.error('no firstdata, category: {}, bookid: {}, page: {}'.format(self.category, self.bookid, self.currentpage))
-            exit(5)
+            exit(2)
         else:
-            # print firstdata.groupdict()['firstdata']
             firstdata = json.loads(firstdata.groupdict()['firstdata'])
 
         for item in firstdata:
             self.items.put(item)
-
         self.currentsection = 2
 
 
 
     def __getnextsection(self):
+        logging.info('get next section, title: %s category: %s, category id: %s, currentpage: %s, currentsection'%(self. title ,self.category, self.bookid, self.currentpage, self.currentsection))
         if self.section >= self.sectionlimit:
             return False
         if self.currentsection == self.singlepagelimit:
