@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: LiSnB
 # @Date:   2015-10-09 19:05:39
-# @Last Modified by:   LiSnB
-# @Last Modified time: 2015-10-13 16:31:46
+# @Last Modified by:   lisnb
+# @Last Modified time: 2015-10-14 23:58:04
 
 import sys
 sys.path.append('..')
@@ -31,7 +31,7 @@ class TradeItem(object):
         # self.categorytitle = categorytitle
 
     def __str__(self):
-        content = '%s\n%s\n%s\n%s'%(self.categorytitle, self.itemid, self.title, '\n'.join(self.parameter))
+        content = '%s\n%s\n%s\n\n%s'%(self.categorytitle, self.itemid, self.title, '\n'.join(self.parameter))
         return content.encode('utf-8')
 
     def run(self):
@@ -95,6 +95,8 @@ class TradeItem(object):
             logging.debug('%s no parameter'%self.itemid)
         else:
             self.parameter = detail['parameter']['datas']
+
+        self.parameter.append('\n')
 
         if 'modules' not in detail:
             logging.debug('%s no modules'%self.itemid)

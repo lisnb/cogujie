@@ -3,7 +3,7 @@
 # @Author: LiSnB
 # @Date:   2015-10-09 20:15:10
 # @Last Modified by:   lisnb
-# @Last Modified time: 2015-10-13 17:00:08
+# @Last Modified time: 2015-10-14 23:42:26
 
 from workers.cogujie import Cogujie
 from workers.tradeitem import TradeItem
@@ -101,7 +101,7 @@ def usage():
 
 def run():
     clearfix()
-    opt = 'icshd'
+    opt = 'icshv'
     lopt = ['csf=','iid=', 'it=', 'cid=', 'cat=', 'ct=', 'tc=', 'mt', 'help']
     opts, args = getopt.getopt(sys.argv[1:], opt, lopt)
     optd= dict(opts)
@@ -120,7 +120,7 @@ def run():
 
     help_ = '--help' in optd or '-h' in optd
 
-    if '-d' in optd:
+    if '-' in optd:
         logging.basicConfig(level = logging.DEBUG, format='%(asctime)s - %(levelname)s - %(threadName)-10s - %(message)s')
 
     if help_:
