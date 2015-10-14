@@ -1,5 +1,5 @@
 # cogujie
-蘑菇街（http://mogujie.com）  图片采集工具
+蘑菇街（ http://mogujie.com ）  图片采集工具
 
 ##description
 cogujie 用于采集蘑菇街的商品图片和一些参数信息，有三种采集方式：
