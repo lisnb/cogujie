@@ -85,7 +85,7 @@ mogujie.db
 
 最后的字段代表图片的种类，商品的图片分为若干类，在命名时使用了这些分类名称，类别和对应的名称记录在info中
 
-```imgs``` 下存放所有的文件
+```imgs``` 下存放所有的图片文件
 
 ##usage:
 使用方法请输入 ```python console.py -h``` 或者 ```python console.py --help```查看
