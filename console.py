@@ -134,6 +134,7 @@ def run():
             print ' or use --help or -h to check the usage'
             exit(1)
         category = '%s_%s'%(cat, cid) if cat and cid else None
+	it = it if not it else it.decode('utf-8')
         tradeitem = TradeItem(iid, it, ct, category)
         tradeitem.run()
 
@@ -148,7 +149,7 @@ def run():
             category = {
                 'category': cat,
                 'id': cid,
-                'title': ct
+                'title': ct if not ct else ct.decode('utf-8')
             }
             cogujie = Cogujie(category)
             cogujie.run()
